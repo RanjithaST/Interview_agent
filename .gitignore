@@ -1,0 +1,15 @@
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment folder
+venv/
+env/
+
+# Environment variables
+.env
+
+# Google service account file
+service.json
