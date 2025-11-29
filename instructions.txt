@@ -1,0 +1,48 @@
+Interview Agent - Setup & Usage Instructions
+
+1. Prerequisites
+
+- Python 3.10 or higher
+- Google account for Google Sheets
+- Gemini API key from Google Generative AI
+- Service account JSON file for Google Sheets API (name it 'service.json' or update SERVICE_FILE env variable)
+
+2. Initial Setup and Install Dependencies
+ a.Open PowerShell in your project folder (C:\interview_agent1)
+ b.Create a virtual environment:
+        python -m venv venv
+ c.Activate the virtual environment:
+        .\venv\Scripts\Activate.ps1
+ d.Install dependencies:
+   Open your terminal or command prompt and run:
+        pip install -r requirements.txt
+
+3. Environment Variables
+Create a `.env` file in the project root with the following:
+    GEMINI_API_KEY=your_gemini_api_key_here
+    SERVICE_FILE=service.json
+    SPREADSHEET_NAME=InterviewAgentDB
+
+4. Google Sheet Setup
+- Create a Google Sheet named 'InterviewAgentDB' (or use a different name and update SPREADSHEET_NAME)
+- Share the sheet with your service account email (from the JSON file) with Editor access
+- Place the service account JSON in the project root as 'service.json'
+
+5. Running the App
+Run the Streamlit app with:
+    streamlit run app.py
+- Enter your Name and Job Role
+- Click "Get Interview Question" to generate a question
+- Write your answer in the text area
+- Click "Evaluate Answer" to get AI feedback
+- Click "Save Result" under Evaluation to save to Google Sheet
+
+6. Notes
+- Make sure your Gemini API key is active and has sufficient quota
+- Ensure your service account JSON has access to the Google Sheet
+- Only one question is generated at a time
+- Answers and feedback will be stored in the Google Sheet along with timestamp
+
+7. Troubleshooting
+- If questions or evaluations fail, check your GEMINI_API_KEY and internet connection
+- If saving fails, check SERVICE_FILE path and that the service account has editor access to the sheet
