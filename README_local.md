@@ -12,14 +12,13 @@ Features
 Project Structure
 
 Interview-Agent-Gemini/
-│
-├── app.py                 # Streamlit application (UI)
-├── interview_engine.py    # Gemini-based question generator
-├── evaluator.py           # Gemini-based answer evaluator
-├── sheets.py              # Google Sheets connection helper
-├── requirements.txt       # Python dependencies
-├── .env                   # Environment variables (not included in repo)
-└── README.md              # Documentation
+app.py                  Streamlit application (UI)
+interview_engine.py     Gemini-based question generator
+evaluator.py            Gemini-based answer evaluator
+sheets.py               Google Sheets connection helper
+requirements.txt        Python dependencie
+.env                    Environment variables (not included in repo)
+README.md               Documentation
 
 Setup & Usage Instructions
 
