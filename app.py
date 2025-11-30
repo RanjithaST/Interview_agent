@@ -167,23 +167,23 @@ with right_col:
 
         st.warning("Click 'Get Interview Question' to continue.")
 
-        if st.button("Save Result", use_container_width=True):
-            if name.strip() == "" or role.strip() == "":
-                st.error("Name and Job Role required!")
-            else:
-                with st.spinner("Saving result..."):
-                    try:
-                        save_to_sheets(
-                            name,
-                            role,
-                            st.session_state.question,
-                            st.session_state.answer,
-                            st.session_state.feedback,
-                            st.session_state.score
-                        )
-                        st.success("Result saved successfully!")
-                    except Exception as e:
-                        st.error("Failed to save.")
-                        st.exception(e)
+        # if st.button("Save Result", use_container_width=True):
+        #     if name.strip() == "" or role.strip() == "":
+        #         st.error("Name and Job Role required!")
+        #     else:
+        #         with st.spinner("Saving result..."):
+        #             try:
+        #                 save_to_sheets(
+        #                     name,
+        #                     role,
+        #                     st.session_state.question,
+        #                     st.session_state.answer,
+        #                     st.session_state.feedback,
+        #                     st.session_state.score
+        #                 )
+        #                 st.success("Result saved successfully!")
+        #             except Exception as e:
+        #                 st.error("Failed to save.")
+        #                 st.exception(e)
     else:
         st.info("Your evaluation will appear here.")
