@@ -4,10 +4,8 @@ from evaluator import evaluate_answer
 from sheets import save_to_sheets
 import re
 
-# ------------------------ PAGE CONFIG ------------------------
 st.set_page_config(page_title="AI Interview Agent", layout="wide")
 
-# ------------------------ CUSTOM CSS ------------------------
 st.markdown("""
     <style>
         body, .stApp {
@@ -15,7 +13,6 @@ st.markdown("""
             color: #000000;
         }
 
-        /* Main title centered and blue */
         .main-title {
             text-align: center !important;
             color: #0073e6 !important;
@@ -24,14 +21,11 @@ st.markdown("""
             margin-bottom: 20px;
         }
 
-        /* Subheaders centered and blue */
         .stSubheader {
             text-align: center !important;
             color: #0073e6 !important;
             font-weight: 700 !important;
         }
-
-        /* Text input labels in blue */
         .stTextInput label {
             color: #0073e6 !important;
             font-weight: 600;
@@ -69,10 +63,8 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# ------------------------ MAIN TITLE ------------------------
-st.markdown("<h1 class='main-title'>🤖 AI Interview Agent</h1>", unsafe_allow_html=True)
+st.markdown("<h1 class='main-title'> AI Interview Agent</h1>", unsafe_allow_html=True)
 
-# ------------------------ SESSION STATE ------------------------
 if "question" not in st.session_state:
     st.session_state.question = ""
 if "answer" not in st.session_state:
@@ -82,10 +74,8 @@ if "feedback" not in st.session_state:
 if "score" not in st.session_state:
     st.session_state.score = None
 
-# ------------------------ LAYOUT ------------------------
 left_col, center_col, right_col = st.columns([1.2, 2.0, 1.2])
 
-# ------------------------ LEFT COLUMN ------------------------
 with left_col:
     st.subheader("User Details")
     name = st.text_input("Name", placeholder="Enter your name")
@@ -101,7 +91,6 @@ with left_col:
                 st.session_state.score = None
                 st.session_state.answer = ""  # Clear answer box
 
-# ------------------------ CENTER COLUMN ------------------------
 with center_col:
     st.subheader("Interview Question")
 
@@ -148,12 +137,11 @@ with center_col:
     else:
         st.info("Click 'Get Interview Question' to begin.")
 
-# ------------------------ RIGHT COLUMN ------------------------
 with right_col:
     st.subheader("Evaluation Result")
 
     if st.session_state.feedback:
-        # Feedback in black font using HTML
+      
         st.markdown(
             f"""
             <div style="
