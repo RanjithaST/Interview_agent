@@ -3,17 +3,45 @@ from interview_engine import generate_question
 from evaluator import evaluate_answer
 from sheets import save_to_sheets
 import re
+
 st.set_page_config(page_title="AI Interview Agent", layout="wide")
+
 st.markdown("""
     <style>
         body, .stApp {
             background-color: #ffffff;
             color: #000000;
         }
-        .stTextInput > div > div > input, .stTextArea textarea {
-            background-color: #f0f0f0;
-            color: #000000;
+
+       
+        .stTextInput, .stTextInput > div, .stTextInput > div > div {
+            margin-bottom: 0px !important;
+            padding-bottom: 0px !important;
         }
+
+    
+        .custom-label {
+            color: #0066cc !important;
+            font-weight: 600 !important;
+            font-size: 15px !important;
+            margin-bottom: 2px !important;
+        }
+
+        .stTextInput > div > div > input {
+            border: 2px solid #0066cc !important;
+            background-color: #f0f8ff !important;
+            color: #000000 !important;
+            border-radius: 6px !important;
+            font-size: 16px !important;
+            padding: 8px !important;
+        }
+
+        .stTextArea textarea {
+            background-color: #f0f0f0 !important;
+            color: #000000 !important;
+        }
+
+      
         .stButton button {
             background-color: #0073e6;
             color: white;
@@ -23,17 +51,21 @@ st.markdown("""
         .stButton button:hover {
             background-color: #005bb5;
         }
+
         .info-box {
             background-color: #f0f0f0;
             padding: 10px;
             border-radius: 5px;
             color: #000000;
         }
+
         .center-text {
             text-align: center;
         }
     </style>
 """, unsafe_allow_html=True)
+
+
 st.markdown("<h1 style='text-align:center;color:#0073e6;'>Interview Agent</h1>", unsafe_allow_html=True)
 st.markdown("<p style='text-align:center;color:#555555;'>Refine your answers with AI guidance and boost your interview confidence.</p>", unsafe_allow_html=True)
 
@@ -49,20 +81,29 @@ if "new_question" not in st.session_state:
     st.session_state.new_question = False
 if "answer_key" not in st.session_state:
     st.session_state.answer_key = "answer_default"
-
 left_col, center_col, right_col = st.columns([1.2, 2, 1.3])
 
 with left_col:
     st.markdown("<h3 class='center-text'>User Details</h3>", unsafe_allow_html=True)
-    name = st.text_input("Name")
-    role = st.text_input("Job Role")
 
+    # Name
+    st.markdown("<p class='custom-label'>Name</p>", unsafe_allow_html=True)
+    name = st.text_input("Name", placeholder="Enter your name", key="name_input", label_visibility="collapsed")
+
+
+    # Job Role
+    st.markdown("<p class='custom-label'>Job Role</p>", unsafe_allow_html=True)
+    role = st.text_input("Role", placeholder="Enter job role", key="role_input", label_visibility="collapsed")
+
+
+    # Generate Question Button
     if st.button("Get Interview Question", use_container_width=True):
         if role.strip() == "":
             st.error("Please enter a job role before generating a question.")
         else:
             with st.spinner("Generating question..."):
                 st.session_state.question = generate_question(role)
+
             st.session_state.feedback = ""
             st.session_state.score = None
             st.session_state.new_question = True
@@ -94,8 +135,7 @@ with center_col:
                         feedback = evaluate_answer(st.session_state.question, st.session_state.answer)
                         st.session_state.feedback = feedback
 
-                        # Calculate score
-                        match = re.search(r"(\d+)\s*/\s*(\d+)", feedback)
+                        match = re.search(r"(\\d+)\\s*/\\s*(\\d+)", feedback)
                         if match:
                             obtained = int(match.group(1))
                             total = int(match.group(2))
@@ -117,9 +157,14 @@ with center_col:
 
 with right_col:
     st.markdown("<h3 class='center-text'>Evaluation</h3>", unsafe_allow_html=True)
+
     if st.session_state.feedback != "":
         st.text_area("Feedback", value=st.session_state.feedback, height=220, key="feedback_box")
-        st.markdown(f"<h3 class='center-text' style='color:#0073e6;'>Score: {st.session_state.score}%</h3>", unsafe_allow_html=True)
+
+        st.markdown(
+            f"<h3 class='center-text' style='color:#0073e6;'>Score: {st.session_state.score}%</h3>",
+            unsafe_allow_html=True
+        )
 
         if st.button("Save Result", use_container_width=True):
             if name.strip() == "" or role.strip() == "":
