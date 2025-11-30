@@ -88,7 +88,6 @@ left_col, center_col, right_col = st.columns([1.2, 2.0, 1.2])
 # ------------------------ LEFT COLUMN ------------------------
 with left_col:
     st.subheader("User Details")
-
     name = st.text_input("Name", placeholder="Enter your name")
     role = st.text_input("Job Role", placeholder="Enter job role")
 
@@ -148,12 +147,30 @@ with center_col:
                         st.exception(e)
     else:
         st.info("Click 'Get Interview Question' to begin.")
+
 # ------------------------ RIGHT COLUMN ------------------------
 with right_col:
     st.subheader("Evaluation Result")
 
     if st.session_state.feedback:
-        st.text_area("Feedback", value=st.session_state.feedback, height=200)
+        # Feedback in black font using HTML
+        st.markdown(
+            f"""
+            <div style="
+                background-color:#f0f8ff;
+                color:#000000;
+                padding:12px;
+                border-radius:6px;
+                height:200px;
+                overflow-y:auto;
+                white-space: pre-wrap;
+                font-size:15px;
+            ">
+                {st.session_state.feedback}
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
         st.markdown(
             f"<h3 style='text-align:center; color:#0073e6;'>Score: {st.session_state.score}%</h3>",
